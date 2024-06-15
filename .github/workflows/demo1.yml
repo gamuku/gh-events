@@ -23,6 +23,13 @@ jobs:
       - name: Test code
         run: npm run test
       - name: Build code
-        run: npm run build
+        run: npm run build      
+      - name: Upload artifacts
+        uses: actions/upload-artifact
+        with:
+          name: download-code
+          path: |
+            dist/
+            package.json
       - name: Deploy project
         run: echo "Deploying..."
