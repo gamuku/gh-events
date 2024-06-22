@@ -8,8 +8,6 @@ on:
     branches:
       - main
       - master
-    paths-ignore:
-      - '.github/workflows/*'
 jobs:
   upload-code:
     runs-on: ubuntu-latest
