@@ -11,7 +11,7 @@ on:
     paths-ignore:
       - '.github/workflows/*'
 jobs:
-  deploy:
+  upload-code:
     runs-on: ubuntu-latest
     steps:
       - name: Output event data
@@ -27,9 +27,19 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: download-code
+          name: upload-code
           path: |
             dist/
             package.json
-      - name: Deploy project
-        run: echo "Deploying..."
+  deploy-code:
+    needs: upload-code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: upload-code
+      - name: Output content of artifacts
+        run: ls -l
+      - name: Deploy code
+        run: echo "Deploying code"
