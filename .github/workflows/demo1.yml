@@ -11,17 +11,14 @@ on:
 jobs:
   upload-code:
     runs-on: ubuntu-latest
+    outputs:
+      filePath: ${{ steps.my-artifact-name.outputs.my-script }}
     steps:
-      - name: Output event data
-        run: echo "${{ toJSON(github.event) }}"
       - name: Get code
         uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm ci
-      - name: Test code
-        run: npm run test
-      - name: Build code
-        run: npm run build      
+      - name: Publish name of the artefact
+        id: my-artifact-name
+        run: find dist/assets/*.js -type f -execdir echo 'my-script={}' >> $GITHUB_OUTPUT ';'
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -37,6 +34,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: upload-code
+      - name: Extract the main file
+        run: needs.upload-code.outputs.filePath
       - name: Output content of artifacts
         run: ls -l
       - name: Deploy code
