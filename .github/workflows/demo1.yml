@@ -39,7 +39,7 @@ jobs:
         with:
           name: upload-code
       - name: Extract the main file
-        run: needs.upload-code.outputs.filePath
+        run: echo "${{ needs.upload-code.outputs.filePath}}"
       - name: Output content of artifacts
         run: ls -l
       - name: Deploy code
