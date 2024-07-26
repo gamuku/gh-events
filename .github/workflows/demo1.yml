@@ -8,10 +8,10 @@ on:
         default: 'warning'
       tags:
         description: 'Test scenario tags'  
-  push:
-    branches:
-      - main
-      - master
+  # push:
+  #   branches:
+  #     - main
+  #     - master
 jobs:
   upload-code:
     runs-on: ubuntu-latest
